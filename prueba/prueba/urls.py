@@ -17,9 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from inicio import views
+from django.conf import settings
+from registro import views as views_registro
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.principal, name="Principal"),
-    path('contacto/',views.contacto, name="Contacto"),
+    path('', views_registro.Principal, name="Principal"),
+    path('contacto/',views_registro.contacto,name="Contacto"),
+    path('comentarios/',views_registro.comentarios,name="Comentarios"),
+    path('formulario/', views.formulario, name="Formulario"),
+    path('registrar/',views_registro.registrar,name="Registrar"),
+    path('eliminarComentario/<int:id>/',views_registro.eliminarComentarioContacto, name='Eliminar'),
 ]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static 
+    urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
